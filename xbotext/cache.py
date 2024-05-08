@@ -15,8 +15,10 @@ def get_xbot_type():
     :retrun: app, activity
     """
     stack = inspect.stack()
-    calling_module_frame = stack[1]
-    calling_module_file_path = calling_module_frame.filename
+    for calling_module_frame in stack:
+        if "xbot_robot" in calling_module_frame.filename:
+            calling_module_file_path =  calling_module_frame.filename
+            break
     calling_module_dir, _ = os.path.split(calling_module_file_path)
     package_json_file_path = os.path.join(calling_module_dir, "package.json")
 
